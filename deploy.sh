@@ -1,27 +1,31 @@
-# Simple workflow for deploying static content to GitHub Pages
-name: Deploy static content to Pages
+# Importado en static-deploy.md
+# Este archivo se extrae como un archivo separado para que Renovate pueda actualizar las versiones de las acciones
+#
+#region contenido
+# Flujo de trabajo simple para desplegar contenido estático en GitHub Pages
+name: Desplegar contenido estático en Pages
 
 on:
-  # Runs on pushes targeting the default branch
+  # Se ejecuta cuando se hace push a la rama principal
   push:
     branches: ['main']
 
-  # Allows you to run this workflow manually from the Actions tab
+  # Permite ejecutar este flujo de trabajo manualmente desde la pestaña de Acciones
   workflow_dispatch:
 
-# Sets the GITHUB_TOKEN permissions to allow deployment to GitHub Pages
+# Establece los permisos del GITHUB_TOKEN para permitir el despliegue en GitHub Pages
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Allow one concurrent deployment
+# Permite un solo despliegue concurrente
 concurrency:
   group: 'pages'
   cancel-in-progress: true
 
 jobs:
-  # Single deploy job since we're just deploying
+  # Trabajo único de despliegue ya que solo estamos desplegando
   deploy:
     environment:
       name: github-pages
@@ -30,22 +34,25 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v5
-      - name: Set up Node
+      - name: Configurar Node
         uses: actions/setup-node@v4
         with:
           node-version: lts/*
           cache: 'npm'
-      - name: Install dependencies
+      - name: Instalar dependencias
         run: npm ci
-      - name: Build
+      - name: Construir
         run: npm run build
-      - name: Setup Pages
+      - name: Configurar Pages
         uses: actions/configure-pages@v5
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v4
+      - name: Subir artefacto
+        uses: actions/upload-pages-artifact@v3
         with:
-          # Upload dist folder
+          # Subir la carpeta dist
           path: './dist'
-      - name: Deploy to GitHub Pages
+      - name: Desplegar a GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+#endregion contenido
+
+
